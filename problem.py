@@ -12,66 +12,66 @@ salinidade_final = ctrl.Consequent(np.arange(0, 41, 1), 'salinidade_final') # OB
 # Cria automaticamente o mapeamento entre valores nítidos e difusos 
 # usando uma função de pertinência padrão (triângulo)
 # 1 - Precipitação acumulada
-precipitacao_acumulada['low'] = fuzz.trapmf(precipitacao_acumulada.universe, [0, 0, 75, 125])
-precipitacao_acumulada['average'] = fuzz.trimf(precipitacao_acumulada.universe, [105, 165, 190])
-precipitacao_acumulada['average_high'] = fuzz.trimf(precipitacao_acumulada.universe, [170, 230, 260])
-precipitacao_acumulada['high'] = fuzz.trimf(precipitacao_acumulada.universe, [225, 280, 315])
-precipitacao_acumulada['very_high'] = fuzz.trapmf(precipitacao_acumulada.universe, [290, 325, 370, 370])
+precipitacao_acumulada['baixa'] = fuzz.trapmf(precipitacao_acumulada.universe, [0, 0, 75, 125])
+precipitacao_acumulada['media'] = fuzz.trimf(precipitacao_acumulada.universe, [105, 165, 190])
+precipitacao_acumulada['media_alta'] = fuzz.trimf(precipitacao_acumulada.universe, [170, 230, 260])
+precipitacao_acumulada['alta'] = fuzz.trimf(precipitacao_acumulada.universe, [225, 280, 315])
+precipitacao_acumulada['muito_alta'] = fuzz.trapmf(precipitacao_acumulada.universe, [290, 325, 370, 370])
 
-# 2 - Salinidade
-salinidade['very_low'] = fuzz.trapmf(salinidade.universe, [0, 0, 4, 8])
-salinidade['low'] = fuzz.trimf(salinidade.universe, [7, 14, 17])
-salinidade['average_low'] = fuzz.trimf(salinidade.universe, [14, 20, 26])
-salinidade['average'] = fuzz.trimf(salinidade.universe, [23, 29, 32])
-salinidade['high'] = fuzz.trapmf(salinidade.universe, [29, 33, 37, 37])
+# 2 - Salinidade (inicial)
+salinidade['muito_baixa'] = fuzz.trapmf(salinidade.universe, [0, 0, 4, 8])
+salinidade['baixa'] = fuzz.trimf(salinidade.universe, [7, 14, 17])
+salinidade['media_baixa'] = fuzz.trimf(salinidade.universe, [14, 20, 26])
+salinidade['media'] = fuzz.trimf(salinidade.universe, [23, 29, 32])
+salinidade['alta'] = fuzz.trapmf(salinidade.universe, [29, 33, 37, 37])
 
 # 3 - Fluxo do rio
-fluxo_rio['low'] = fuzz.trapmf(fluxo_rio.universe, [0, 0, 650, 900])
-fluxo_rio['average'] = fuzz.trimf(fluxo_rio.universe, [650, 1000, 1350])
-fluxo_rio['average_high'] = fuzz.trimf(fluxo_rio.universe, [1150, 1400, 1800])
-fluxo_rio['high'] = fuzz.trimf(fluxo_rio.universe, [1650, 1950, 2300])
-fluxo_rio['very_high'] = fuzz.trapmf(fluxo_rio.universe, [2150, 2470, 3000, 3000])
+fluxo_rio['baixa'] = fuzz.trapmf(fluxo_rio.universe, [0, 0, 650, 900])
+fluxo_rio['media'] = fuzz.trimf(fluxo_rio.universe, [650, 1000, 1350])
+fluxo_rio['media_alta'] = fuzz.trimf(fluxo_rio.universe, [1150, 1400, 1800])
+fluxo_rio['alta'] = fuzz.trimf(fluxo_rio.universe, [1650, 1950, 2300])
+fluxo_rio['muito_alta'] = fuzz.trapmf(fluxo_rio.universe, [2150, 2470, 3000, 3000])
 
-# 2 - Salinidade FINAL
-salinidade_final['very_low'] = fuzz.trapmf(salinidade_final.universe, [0, 0, 4, 8])
-salinidade_final['low'] = fuzz.trimf(salinidade_final.universe, [7, 14, 17])
-salinidade_final['average_low'] = fuzz.trimf(salinidade_final.universe, [14, 20, 26])
-salinidade_final['average'] = fuzz.trimf(salinidade_final.universe, [23, 29, 32])
-salinidade_final['high'] = fuzz.trapmf(salinidade_final.universe, [29, 33, 37, 37])
+# 4 - Salinidade FINAL
+salinidade_final['muito_baixa'] = fuzz.trapmf(salinidade_final.universe, [0, 0, 4, 8])
+salinidade_final['baixa'] = fuzz.trimf(salinidade_final.universe, [7, 14, 17])
+salinidade_final['media_baixa'] = fuzz.trimf(salinidade_final.universe, [14, 20, 26])
+salinidade_final['media'] = fuzz.trimf(salinidade_final.universe, [23, 29, 32])
+salinidade_final['alta'] = fuzz.trapmf(salinidade_final.universe, [29, 33, 37, 37])
 
 precipitacao_acumulada.view()
 salinidade.view()
 fluxo_rio.view()
 salinidade_final.view()
 
-rule1 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average_low'] & fluxo_rio['average'], salinidade_final['average_low'])
-rule2 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average'] & fluxo_rio['average_high'], salinidade_final['average_low'])
-rule3 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average_low'] & fluxo_rio['average_high'], salinidade_final['low'])
-rule4 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average_low'] & fluxo_rio['high'], salinidade_final['low'])
-rule5 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['low'] & fluxo_rio['high'], salinidade_final['average_low'])
-rule6 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average'] & fluxo_rio['very_high'], salinidade_final['low'])
-rule7 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average_low'] & fluxo_rio['very_high'], salinidade_final['average_low'])
-rule8 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['low'] & fluxo_rio['very_high'], salinidade_final['average_low'])
-rule9 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average'] & fluxo_rio['low'], salinidade_final['average'])
-rule10 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['average'] & fluxo_rio['average'], salinidade_final['average_low'])
-rule11 = ctrl.Rule(precipitacao_acumulada['low'] & salinidade['low'] & fluxo_rio['low'], salinidade_final['low'])
-rule12 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['average'] & fluxo_rio['low'], salinidade_final['average_low'])
-rule13 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['average_low'] & fluxo_rio['low'], salinidade_final['average_low'])
-rule14 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['average'] & fluxo_rio['average'], salinidade_final['average_low'])
-rule15 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['average'] & fluxo_rio['average_high'], salinidade_final['average_low'])
-rule16 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['average_low']& fluxo_rio['average'], salinidade_final['low'])
-rule17 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['high'] & fluxo_rio['low'], salinidade_final['average'])
-rule18 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['high'] & fluxo_rio['average'], salinidade_final['average_low'])
-rule19 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['high'] & fluxo_rio['average_high'], salinidade_final['low'])
-rule20 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['low'] & fluxo_rio['average'], salinidade_final['low'])
-rule21 = ctrl.Rule(precipitacao_acumulada['average'] & salinidade['low'] & fluxo_rio['low'], salinidade_final['low'])
-rule22 = ctrl.Rule(precipitacao_acumulada['average_high'] & salinidade['average'] & fluxo_rio['low'], salinidade_final['average_low'])
-rule23 = ctrl.Rule(precipitacao_acumulada['average_high'] & salinidade['average_low'] & fluxo_rio['low'], salinidade_final['average_low'])
-rule24 = ctrl.Rule( precipitacao_acumulada['high'] & salinidade['average'] & fluxo_rio['low'], salinidade_final['average_low'])
-rule25 = ctrl.Rule(precipitacao_acumulada['high'] & salinidade['average_low'] & fluxo_rio['low'], salinidade_final['low'])
-rule26 = ctrl.Rule(precipitacao_acumulada['very_high'] & salinidade['average'] & fluxo_rio['low'], salinidade_final['very_low'])
-rule27 = ctrl.Rule(precipitacao_acumulada['very_high'] & salinidade['average_low'] & fluxo_rio['low'], salinidade_final['very_low'])
-rule28 = ctrl.Rule(precipitacao_acumulada['very_high'] & salinidade['low'] & fluxo_rio['low'], salinidade_final['very_low'])
+rule1 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media_baixa'] & fluxo_rio['media'], salinidade_final['media_baixa'])
+rule2 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media'] & fluxo_rio['media_alta'], salinidade_final['media_baixa'])
+rule3 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media_baixa'] & fluxo_rio['media_alta'], salinidade_final['baixa'])
+rule4 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media_baixa'] & fluxo_rio['alta'], salinidade_final['baixa'])
+rule5 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['baixa'] & fluxo_rio['alta'], salinidade_final['media_baixa'])
+rule6 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media'] & fluxo_rio['muito_alta'], salinidade_final['baixa'])
+rule7 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media_baixa'] & fluxo_rio['muito_alta'], salinidade_final['media_baixa'])
+rule8 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['baixa'] & fluxo_rio['muito_alta'], salinidade_final['media_baixa'])
+rule9 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media'] & fluxo_rio['baixa'], salinidade_final['media'])
+rule10 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['media'] & fluxo_rio['media'], salinidade_final['media_baixa'])
+rule11 = ctrl.Rule(precipitacao_acumulada['baixa'] & salinidade['baixa'] & fluxo_rio['baixa'], salinidade_final['baixa'])
+rule12 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['media'] & fluxo_rio['baixa'], salinidade_final['media_baixa'])
+rule13 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['media_baixa'] & fluxo_rio['baixa'], salinidade_final['media_baixa'])
+rule14 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['media'] & fluxo_rio['media'], salinidade_final['media_baixa'])
+rule15 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['media'] & fluxo_rio['media_alta'], salinidade_final['media_baixa'])
+rule16 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['media_baixa']& fluxo_rio['media'], salinidade_final['baixa'])
+rule17 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['alta'] & fluxo_rio['baixa'], salinidade_final['media'])
+rule18 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['alta'] & fluxo_rio['media'], salinidade_final['media_baixa'])
+rule19 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['alta'] & fluxo_rio['media_alta'], salinidade_final['baixa'])
+rule20 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['baixa'] & fluxo_rio['media'], salinidade_final['baixa'])
+rule21 = ctrl.Rule(precipitacao_acumulada['media'] & salinidade['baixa'] & fluxo_rio['baixa'], salinidade_final['baixa'])
+rule22 = ctrl.Rule(precipitacao_acumulada['media_alta'] & salinidade['media'] & fluxo_rio['baixa'], salinidade_final['media_baixa'])
+rule23 = ctrl.Rule(precipitacao_acumulada['media_alta'] & salinidade['media_baixa'] & fluxo_rio['baixa'], salinidade_final['media_baixa'])
+rule24 = ctrl.Rule( precipitacao_acumulada['alta'] & salinidade['media'] & fluxo_rio['baixa'], salinidade_final['media_baixa'])
+rule25 = ctrl.Rule(precipitacao_acumulada['alta'] & salinidade['media_baixa'] & fluxo_rio['baixa'], salinidade_final['baixa'])
+rule26 = ctrl.Rule(precipitacao_acumulada['muito_alta'] & salinidade['media'] & fluxo_rio['baixa'], salinidade_final['muito_baixa'])
+rule27 = ctrl.Rule(precipitacao_acumulada['muito_alta'] & salinidade['media_baixa'] & fluxo_rio['baixa'], salinidade_final['muito_baixa'])
+rule28 = ctrl.Rule(precipitacao_acumulada['muito_alta'] & salinidade['baixa'] & fluxo_rio['baixa'], salinidade_final['muito_baixa'])
 
 salinidade_final_ctrl = ctrl.ControlSystem([
     rule1, rule2, rule3, rule4, rule5,
@@ -84,9 +84,9 @@ salinidade_final_ctrl = ctrl.ControlSystem([
 salinidade_final_simulador = ctrl.ControlSystemSimulation(salinidade_final_ctrl)
 
 # Entrando com alguns valores para qualidade da precipitacao_acumulada e do serviço
-salinidade_final_simulador.input['precipitacao_acumulada'] = 13.6
-salinidade_final_simulador.input['salinidade'] = 14
-salinidade_final_simulador.input['fluxo_rio'] = 2016
+salinidade_final_simulador.input['precipitacao_acumulada'] = 23
+salinidade_final_simulador.input['salinidade'] = 23
+salinidade_final_simulador.input['fluxo_rio'] = 1454
 
 # Computando o resultado
 salinidade_final_simulador.compute()
