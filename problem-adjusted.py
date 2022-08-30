@@ -19,8 +19,8 @@ precipitacao_acumulada['muito_alta'] = fuzz.trapmf(precipitacao_acumulada.univer
 # 2 - Salinidade (inicial)
 salinidade['muito_baixa'] = fuzz.trapmf(salinidade.universe, [0, 0, 4, 8])
 salinidade['baixa'] = fuzz.trimf(salinidade.universe, [7, 14, 17])
-salinidade['media_baixa'] = fuzz.trimf(salinidade.universe, [14, 20, 26])
-salinidade['media'] = fuzz.trimf(salinidade.universe, [23, 29, 32])
+salinidade['media_baixa'] = fuzz.trimf(salinidade.universe, [14, 20, 28]) # modificado
+salinidade['media'] = fuzz.trimf(salinidade.universe, [21, 29, 32]) # modificado
 salinidade['alta'] = fuzz.trapmf(salinidade.universe, [29, 33, 37, 37])
 
 # 3 - Fluxo do rio
@@ -33,8 +33,8 @@ fluxo_rio['muito_alta'] = fuzz.trapmf(fluxo_rio.universe, [2150, 2470, 3000, 300
 # 4 - Salinidade FINAL
 salinidade_final['muito_baixa'] = fuzz.trapmf(salinidade_final.universe, [0, 0, 4, 8])
 salinidade_final['baixa'] = fuzz.trimf(salinidade_final.universe, [7, 14, 17])
-salinidade_final['media_baixa'] = fuzz.trimf(salinidade_final.universe, [14, 20, 26])
-salinidade_final['media'] = fuzz.trimf(salinidade_final.universe, [23, 29, 32])
+salinidade_final['media_baixa'] = fuzz.trimf(salinidade_final.universe, [14, 20, 28]) # modificado
+salinidade_final['media'] = fuzz.trimf(salinidade_final.universe, [21, 29, 32]) # modificado
 salinidade_final['alta'] = fuzz.trapmf(salinidade_final.universe, [29, 33, 37, 37])
 
 precipitacao_acumulada.view()
